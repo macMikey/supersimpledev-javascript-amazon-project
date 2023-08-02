@@ -64,17 +64,22 @@ document.querySelectorAll('.js-add-to-cart')
   .forEach((button) => {
     button.addEventListener('click', () => {
       const productId=button.dataset.productId;
-      const index=cart.findIndex (product => {
-          return product.productId===productId;
-      }); //findIndex
+      const index=cart.findIndex (product => product.productId===productId);
 
       if (index===-1) {
         cart.push({
           productId: productId,
           quantity: 1
-        })
-      } else {
-        cart[index].quantity++;
-      } // if index===-1
+        }) //cart.push
+      } else cart[index].quantity++;
+
+     updateCartQuantity();
     }); //button.addEventListener('click')
   }); //forEach
+
+
+
+  function updateCartQuantity(){
+    const cartQuantity=cart.reduce ( (cartQuantity , item) => cartQuantity + item.quantity , 0 ) ;
+      document.querySelector('.js-cart-quantity').innerHTML= cartQuantity;
+    } //updateCartQuantity
